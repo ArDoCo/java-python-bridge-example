@@ -80,4 +80,5 @@ fabric.properties
 
 # project specific
 my_venv
+my_env
 
