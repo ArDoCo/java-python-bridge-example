@@ -1,14 +1,18 @@
+package pythonsetup;
+
 import org.nd4j.python4j.*;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Map;
 
 public class PythonDependencyChecker {
+    private PythonDependencyChecker(){
 
-    public String getPythonVersion(){
+    }
+    public static String getPythonVersion(){
         try(PythonGIL pythonGIL = PythonGIL.lock()) {
             try(PythonGC gc = PythonGC.watch()) {
-                PythonVariable out = new PythonVariable<>("version", PythonTypes.STR);
+                PythonVariable<String> out = new PythonVariable<>("version", PythonTypes.STR);
                 PythonExecutioner.exec(
                         """
                                 import sys
@@ -16,15 +20,15 @@ public class PythonDependencyChecker {
                                 """,
                         null, Collections.singletonList(out)
                 );
-                return (String)out.getValue();
+                return out.getValue();
             }
         }
     }
 
-    public HashMap<String, String> getAvailableLibraries() {
+    public static Map<String, String> getAvailableLibraries() {
         try (PythonGIL pythonGIL = PythonGIL.lock()) {
             try (PythonGC gc = PythonGC.watch()) {
-                PythonVariable out = new PythonVariable<>("packages", PythonTypes.DICT);
+                PythonVariable<Map> out = new PythonVariable<>("packages", PythonTypes.DICT);
                 PythonExecutioner.exec(
                         """
                                 from pip._internal.operations import freeze
@@ -32,19 +36,17 @@ public class PythonDependencyChecker {
                                 """,
                         null, Collections.singletonList(out)
                 );
-
-                HashMap<String, String> installedModules = (HashMap) out.getValue();
-                return installedModules;
+                return out.getValue();
             }
         }
     }
 
-    public boolean versionSatisfied(String minimumVersion, String actualVersion){
+    public static boolean versionSatisfied(String minimumVersion, String actualVersion){
 
         String[] actualVersionSplit = actualVersion.split("\\.");
         String[] minimumVersionSplit = minimumVersion.split("\\.");
 
-        if(!(actualVersionSplit.length == minimumVersionSplit.length)){
+        if(actualVersionSplit.length != minimumVersionSplit.length){
             throw new IllegalArgumentException();
         }
 
@@ -56,11 +58,11 @@ public class PythonDependencyChecker {
         return true;
     }
 
-    public boolean requiredLibrariesAvailable(HashMap<String, String> requiredLibraries){
-        HashMap<String, String> availableLibraries = getAvailableLibraries();
+    public static boolean requiredLibrariesAvailable(Map<String, String> requiredLibraries){
+        Map<String, String> availableLibraries = getAvailableLibraries();
 
         for(String lib:requiredLibraries.keySet()){
-            if(availableLibraries.keySet().contains(lib)){
+            if(availableLibraries.containsKey(lib)){
                 String requiredVersion = requiredLibraries.get(lib);
                 String availableVersion = availableLibraries.get(lib);
                 if(!versionSatisfied(requiredVersion, availableVersion)){
