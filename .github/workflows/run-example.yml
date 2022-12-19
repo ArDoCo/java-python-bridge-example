@@ -4,9 +4,13 @@ on:
     branches: [ experimental ]
 
 jobs:
-  run_example:
+  example_matrix:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest ]
 
-    runs-on: ubuntu-latest
+  run_example:
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v3
