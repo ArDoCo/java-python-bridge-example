@@ -20,4 +20,4 @@ jobs:
           distribution: 'adopt'
 
       - name: compile and run example
-        run: mvn compile exec:java -Dexec.mainClass="Example"
+        run: mvn exec:java -D"exec.mainClass"="Example"
