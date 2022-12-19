@@ -1,0 +1,8 @@
+{
+    "targetPath":"",
+    "reqFile":"./src/main/resources/requirements.txt",
+    "minPipVersion":"22.0.0",
+    "maxPipVersion":"",
+    "minPythonVersion":"3.9.0",
+    "maxPythonVersion":""
+ }
