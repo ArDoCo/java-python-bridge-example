@@ -23,14 +23,15 @@ public class PythonEnvironmentSetup {
         if (config.get("targetPath").equals("")){
             config.put("targetPath", System.getProperty("user.home") + "/exampleProject_pythonLibraries");
         }
+
+        //install requirements
+         callRequirementsInstallationScript();
         //add path to dependencies
         addPythonPath(config.get("targetPath"));
         //add path to nlp_doc
         addPythonPath("./src/main/python");
-        //install requirements if not already satisfied
-        if(!PythonDependencyChecker.requiredLibrariesAvailable(config.get("reqFile"))){
-            callRequirementsInstallationScript();
-        }
+
+
     }
     private Map readConfig(String configFile){
 
