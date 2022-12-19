@@ -1,3 +1,5 @@
+package example;
+
 import nlp.NLPDoc;
 import pythonsetup.PythonEnvironmentSetup;
 
