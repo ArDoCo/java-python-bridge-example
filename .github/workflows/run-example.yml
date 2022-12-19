@@ -20,4 +20,4 @@ jobs:
           distribution: 'adopt'
 
       - name: compile and run example
-        run: mvn exec:java
+        run: mvn clean install exec:java
