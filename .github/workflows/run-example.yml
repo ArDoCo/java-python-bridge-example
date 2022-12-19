@@ -1,0 +1,20 @@
+name: run example code
+on:
+ push:
+    branches: [ experimental ]
+
+jobs:
+  run_example:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 18
+        uses: actions/setup-java@v3
+        with:
+          java-version: '18'
+          distribution: 'adopt'
+
+      - name: compile and run example
+        run: mvn compile exec:java -Dexec.mainClass="Example"
