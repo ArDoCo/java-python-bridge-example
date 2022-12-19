@@ -13,7 +13,7 @@ public class Example {
 
         NLPDoc doc = new NLPDoc("This is merely a small test phrase");
         Map<String, String> pos = doc.getPOSMap();
-g
+
         for(String token: pos.keySet()){
             System.out.println(token + ":" + pos.get(token));
         }
