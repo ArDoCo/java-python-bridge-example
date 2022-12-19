@@ -1,5 +1,5 @@
 {
-    "targetPath":"",
+    "targetPath":"./python-dependencies",
     "reqFile":"./src/main/resources/requirements.txt",
     "minPipVersion":"22.0.0",
     "maxPipVersion":"",
