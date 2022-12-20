@@ -36,36 +36,37 @@ public class PythonDependencyChecker {
     public static String getPythonVersion(){
         try(PythonGIL pythonGIL = PythonGIL.lock()) {
             try(PythonGC gc = PythonGC.watch()) {
-                PythonVariable<String> out = new PythonVariable<>("version", PythonTypes.STR);
+                PythonVariable<String> version = new PythonVariable<>("version", PythonTypes.STR);
                 PythonExecutioner.exec(
                         """
                                 import sys
                                 version = sys.version.split(' ')[0]
                                 """,
-                        null, Collections.singletonList(out)
+                        null, Collections.singletonList(version)
                 );
-                return out.getValue();
+                return version.getValue();
             }
         }
     }
     public static String getPipVersion(){
         try(PythonGIL pythonGIL = PythonGIL.lock()) {
             try(PythonGC gc = PythonGC.watch()) {
-                PythonVariable<String> out = new PythonVariable<>("version", PythonTypes.STR);
+                PythonVariable<String> version = new PythonVariable<>("version", PythonTypes.STR);
                 PythonExecutioner.exec(
                         """
                                 import pip
                                 version = pip.__version__
                                 """,
-                        null, Collections.singletonList(out)
+                        null, Collections.singletonList(version)
                 );
-                return out.getValue();
+                return version.getValue();
             }
         }
     }
     public static Map<String, String> getAvailableLibraries() {
         try (PythonGIL pythonGIL = PythonGIL.lock()) {
             try (PythonGC gc = PythonGC.watch()) {
+                //obtain all available python packages with version using pip freeze and read it into a map
                 PythonVariable<Map> out = new PythonVariable<>("packages", PythonTypes.DICT);
                 PythonExecutioner.exec(
                         """

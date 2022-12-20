@@ -19,7 +19,7 @@ public class PythonEnvironmentSetup {
     }
 
     public void initialize(){
-        //if not target path is given, declare default path
+        //if no target path is given, declare default path
         if (config.get("targetPath").equals("")){
             config.put("targetPath", System.getProperty("user.home") + "/exampleProject_pythonLibraries");
         }
@@ -28,18 +28,14 @@ public class PythonEnvironmentSetup {
          callRequirementsInstallationScript();
         //add path to dependencies
         addPythonPath(config.get("targetPath"));
-        //add path to nlp_doc
+        //add path to nlp_doc,py
         addPythonPath("./src/main/python");
-
-
     }
     private Map readConfig(String configFile){
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-
             return  mapper.readValue(Paths.get(configFile).toFile(), Map.class);
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

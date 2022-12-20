@@ -55,7 +55,7 @@ If the Python code to be executed includes external libraries, the paths to thes
 In this example project, a simple text phrase is parsed and the parts-of-speech (POS) are tagged using the Python library [spaCy](https://spacy.io/).
 
 To set up all dependencies on Python side, there is the class [PythonEnvironmentSetup](https://github.com/ArDoCo/java-python-bridge-example/blob/experimental/src/main/java/pythonsetup/PythonEnvironmentSetup.java).
-The Method ```initialize()``` calls [install_requirements.py](https://github.com/ArDoCo/java-python-bridge-example/blob/experimental/src/main/python/install_requirements.py), that installs all dependencies from a requirements.txt file to a predefined directory. The requirements.txt and the target directory for the packages are specyfied in the [conf.json](https://github.com/ArDoCo/java-python-bridge-example/blob/experimental/src/main/resources/conf.json). If the target directory field in the conf.json is empty, the required packages will be installed in the useres home directory. 
+The Method ```initialize()``` calls [install_requirements.py](https://github.com/ArDoCo/java-python-bridge-example/blob/experimental/src/main/python/install_requirements.py), that installs all dependencies from a requirements.txt file to a predefined directory using pip. The requirements.txt and the target directory for the packages are specyfied in the [conf.json](https://github.com/ArDoCo/java-python-bridge-example/blob/experimental/src/main/resources/conf.json). If the target directory field in the conf.json is empty, the required packages will be installed in the useres home directory. 
 
 After the requirements have been installed, the library path from the conf.json is added such that Python4j can find them. 
 
