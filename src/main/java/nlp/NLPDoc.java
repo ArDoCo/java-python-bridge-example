@@ -13,7 +13,9 @@ public class NLPDoc {
     public NLPDoc(String text) {
         try(PythonGIL pythonGIL = PythonGIL.lock()) {
             try (PythonGC gc = PythonGC.watch()) {
+                //import the python class
                 PythonExecutioner.exec("from nlp_doc import NLPDoc");
+                //instantiate python class with text phrase
                 PythonExecutioner.exec("nlp_doc = NLPDoc(text)",
                         Collections.singletonList(new PythonVariable<>("text", PythonTypes.STR, text)), null
                 );
@@ -22,9 +24,12 @@ public class NLPDoc {
         }
     }
     private Map<String, String> readInPOS(){
-        PythonVariable<Map>out = new PythonVariable<>("pos_dict", PythonTypes.DICT);
-        PythonExecutioner.exec("pos_dict = nlp_doc.get_pos()", null, Collections.singletonList(out));
-        return out.getValue();
+        //define output variable
+        PythonVariable<Map>posDict = new PythonVariable<>("pos_dict", PythonTypes.DICT);
+        //read out python dict into posDict
+        PythonExecutioner.exec("pos_dict = nlp_doc.get_pos()", null, Collections.singletonList(posDict));
+        //return Map from posDict
+        return posDict.getValue();
     }
     public Map<String, String> getPOSMap(){
         return this.POSMap;
