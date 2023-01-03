@@ -23,8 +23,8 @@ jobs:
         with:
           python-version: '3.10' 
       - name: check installed packages
-        run: pip freeze
+        run: python -m pip freeze
       - name: compile and run example
         run: mvn clean install exec:java
       - name: check installed packages again
-        run: pip freeze
+        run: python -m pip freeze
