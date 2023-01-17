@@ -1,7 +1,6 @@
 name: run example code
 on:
  push:
-    branches: [ experimental ]
 
 jobs:
   run_example:
